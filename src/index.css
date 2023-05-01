@@ -1,3 +1,8 @@
+*{
+    padding:0;
+    margin:0
+}
+
 body{
     background-color: #303030;
     color:#f1f1f1
@@ -6,5 +11,5 @@ body{
 
 a{
     color:#f1f1f1;
-    text-decoration: none;
+    
 }

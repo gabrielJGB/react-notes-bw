@@ -1,24 +1,51 @@
-import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserProvider';
 
 const Login = () => {
-  const { user, signIn  } = useContext(UserContext);
+  const { signIn,user } = useContext(UserContext);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const handleSignIn  =()=>{
-    signIn()  
-    navigate("/")
 
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await signIn(email, password)
+      
+      navigate('/')
+
+    }
+    catch (error) { console.log(error.code) }
   }
+
+  if (user) {
+    return <Navigate to="/" />;
+}
+
+
   return (
     <div>
-      <h1>Login</h1>
-      <h2>{user ? "Conectado" : "Desconectado"}</h2>
+      <h1>Iniciar sesión</h1>
 
-      <button className="btn btn-primary" onClick={handleSignIn}>
-        Iniciar sesión
-      </button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="email"
+          placeholder='Email'
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder='Contraseña'
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button type='submit'>Iniciar Sesión</button>
+      </form>
+
 
     </div>
   )
